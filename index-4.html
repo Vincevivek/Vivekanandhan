@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>New hostel</title>
+<style>
+:root{--bg:#f4f6fb;--card:#fff;--tx:#1b2240;--mu:#6b7390;--pr:#4f46e5;--pr2:#7c3aed;--bd:#e3e7f2;--ok:#16a34a;--no:#dc2626;--wa:#d97706;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1226;--card:#191d38;--tx:#eef0ff;--mu:#9aa2c6;--bd:#2a2f55}}
+:root[data-theme="dark"]{--bg:#0f1226;--card:#191d38;--tx:#eef0ff;--mu:#9aa2c6;--bd:#2a2f55}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--tx)}
+button,input,select,textarea{font:inherit}
+.hide{display:none!important}
+#auth{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:16px;background:linear-gradient(135deg,var(--pr),var(--pr2))}
+.box{background:var(--card);border-radius:18px;padding:26px;width:100%;max-width:380px;box-shadow:0 20px 50px rgba(0,0,0,.25)}
+.box h1{margin:0 0 4px;font-size:26px}.box p.s{margin:0 0 18px;color:var(--mu);font-size:14px}
+.tabs{display:flex;gap:6px;background:var(--bg);padding:4px;border-radius:10px;margin-bottom:16px}
+.tabs button{flex:1;border:0;background:none;padding:9px;border-radius:8px;color:var(--mu);cursor:pointer;font-weight:600}
+.tabs button.on{background:var(--card);color:var(--pr);box-shadow:0 1px 4px rgba(0,0,0,.12)}
+label{display:block;font-size:13px;color:var(--mu);margin:10px 0 4px}
+input,select,textarea{width:100%;padding:10px 12px;border:1px solid var(--bd);border-radius:10px;background:var(--bg);color:var(--tx)}
+.btn{background:linear-gradient(135deg,var(--pr),var(--pr2));color:#fff;border:0;padding:11px 16px;border-radius:10px;cursor:pointer;font-weight:600;margin-top:14px;width:100%}
+.btn.sm{width:auto;margin:0;padding:6px 11px;font-size:13px}.btn.red{background:var(--no)}.btn.grn{background:var(--ok)}
+.msg{margin-top:10px;font-size:13px;min-height:18px}.err{color:var(--no)}.good{color:var(--ok)}
+#app{display:flex;min-height:100vh}
+aside{width:236px;background:var(--card);border-right:1px solid var(--bd);padding:18px 12px;position:sticky;top:0;height:100vh;overflow:auto;flex-shrink:0}
+aside h2{margin:0 8px 16px;font-size:20px;color:var(--pr)}
+aside a{display:block;padding:10px 12px;border-radius:10px;color:var(--tx);cursor:pointer;margin-bottom:3px;font-size:15px}
+aside a:hover{background:var(--bg)}aside a.on{background:linear-gradient(135deg,var(--pr),var(--pr2));color:#fff}
+main{flex:1;min-width:0;padding:22px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:18px;flex-wrap:wrap}
+.top h1{margin:0;font-size:22px}
+#menu{display:none;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:8px;padding:6px 10px;cursor:pointer}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:20px}
+.stat{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:16px}
+.stat small{color:var(--mu);font-size:13px}.stat b{display:block;font-size:24px;margin-top:6px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:18px;margin-bottom:16px}
+.card h3{margin:0 0 10px}
+.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.tw{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:9px 8px;border-bottom:1px solid var(--bd);white-space:nowrap}th{color:var(--mu);font-weight:600}
+.tag{padding:3px 9px;border-radius:20px;font-size:12px;font-weight:600;background:var(--bg)}
+.tag.ok{color:var(--ok)}.tag.no{color:var(--no)}.tag.wa{color:var(--wa)}
+.fac{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.fac div{background:var(--bg);border-radius:12px;padding:14px;font-size:14px}.fac span{font-size:24px;display:block;margin-bottom:6px}
+@media(max-width:760px){#menu{display:block}aside{position:fixed;z-index:9;left:-250px;transition:.2s}aside.open{left:0;box-shadow:0 0 40px rgba(0,0,0,.4)}main{padding:14px}}
+
+#auth{background:radial-gradient(circle at 15% 20%,#f472b6 0,transparent 40%),radial-gradient(circle at 85% 80%,#22d3ee 0,transparent 40%),linear-gradient(135deg,#4f46e5,#7c3aed 55%,#db2777)}
+.box{border-radius:22px;border-top:5px solid #f59e0b}
+.box h1{background:linear-gradient(90deg,#4f46e5,#db2777);-webkit-background-clip:text;background-clip:text;color:transparent;font-size:30px}
+aside{background:linear-gradient(180deg,#312e81,#5b21b6 60%,#9d174d);border:0}
+aside h2{color:#fff}aside a{color:#e0e7ff}aside a:hover{background:rgba(255,255,255,.14)}
+aside a.on{background:#fff;color:#5b21b6;font-weight:700;box-shadow:0 4px 12px rgba(0,0,0,.25)}
+.top h1{background:linear-gradient(90deg,var(--pr),#db2777);-webkit-background-clip:text;background-clip:text;color:transparent}
+#who{background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff}
+.stat{color:#fff;border:0;box-shadow:0 8px 20px rgba(0,0,0,.12);transition:transform .2s;position:relative;overflow:hidden}
+.stat:hover{transform:translateY(-4px)}.stat small{color:rgba(255,255,255,.85)}
+.stat::after{position:absolute;right:10px;top:6px;font-size:34px;opacity:.3}
+.stat:nth-child(1){background:linear-gradient(135deg,#6366f1,#8b5cf6)}.stat:nth-child(1)::after{content:'🎓'}
+.stat:nth-child(2){background:linear-gradient(135deg,#10b981,#059669)}.stat:nth-child(2)::after{content:'💰'}
+.stat:nth-child(3){background:linear-gradient(135deg,#f59e0b,#ef4444)}.stat:nth-child(3)::after{content:'📅'}
+.stat:nth-child(4){background:linear-gradient(135deg,#06b6d4,#3b82f6)}.stat:nth-child(4)::after{content:'🏢'}
+.stat:nth-child(5){background:linear-gradient(135deg,#ec4899,#be185d)}.stat:nth-child(5)::after{content:'🚪'}
+.stat:nth-child(6){background:linear-gradient(135deg,#84cc16,#16a34a)}.stat:nth-child(6)::after{content:'⭐'}
+.card{border-left:5px solid var(--pr2);box-shadow:0 4px 14px rgba(79,70,229,.08)}
+.card h3{color:var(--pr)}
+th{background:linear-gradient(90deg,rgba(79,70,229,.12),rgba(219,39,119,.12));color:var(--tx)}
+.fac div{border-top:4px solid var(--pr2);transition:.2s}.fac div:hover{transform:translateY(-3px);background:var(--card);box-shadow:0 6px 16px rgba(0,0,0,.12)}
+.fac div:nth-child(3n+1){border-color:#f59e0b}.fac div:nth-child(3n+2){border-color:#06b6d4}
+.btn:hover{filter:brightness(1.1)}
+
+main{--ac:#4f46e5;--ac2:#8b5cf6;background:linear-gradient(180deg,color-mix(in srgb,var(--ac) 14%,var(--bg)),var(--bg) 380px)}
+main[data-p=dash]{--ac:#4f46e5;--ac2:#db2777}
+main[data-p=adm],main[data-p=students]{--ac:#7c3aed;--ac2:#c026d3}
+main[data-p=fac]{--ac:#0891b2;--ac2:#2563eb}
+main[data-p=pay],main[data-p=pays]{--ac:#059669;--ac2:#65a30d}
+main[data-p=leave],main[data-p=leaves]{--ac:#ea580c;--ac2:#f59e0b}
+main[data-p=fb]{--ac:#db2777;--ac2:#f43f5e}
+.top{background:linear-gradient(135deg,var(--ac),var(--ac2));padding:16px 18px;border-radius:16px;box-shadow:0 8px 22px rgba(0,0,0,.18)}
+.top h1{background:none;-webkit-background-clip:initial;background-clip:initial;color:#fff}
+#menu{background:rgba(255,255,255,.2);color:#fff;border:0}
+#who{background:rgba(255,255,255,.25);color:#fff}
+.card{border-left-color:var(--ac);background:linear-gradient(180deg,color-mix(in srgb,var(--ac) 7%,var(--card)),var(--card) 60%)}
+.card h3{color:var(--ac)}
+th{background:linear-gradient(90deg,color-mix(in srgb,var(--ac) 20%,transparent),color-mix(in srgb,var(--ac2) 20%,transparent))}
+tr:nth-child(even) td{background:color-mix(in srgb,var(--ac) 5%,transparent)}
+main .btn{background:linear-gradient(135deg,var(--ac),var(--ac2))}
+main .btn.grn{background:var(--ok)}main .btn.red{background:var(--no)}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--ac);border-color:var(--ac)}
+.fac div{background:color-mix(in srgb,var(--ac) 8%,var(--card))}
+.tag.ok{background:rgba(22,163,74,.15)}.tag.no{background:rgba(220,38,38,.15)}.tag.wa{background:rgba(217,119,6,.18)}
+
+main[data-p=dash]{--ac:#db2777;--ac2:#f43f5e;background:linear-gradient(180deg,#fce7f3,#fff1f5 420px,var(--bg))}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]) main[data-p=dash]{background:linear-gradient(180deg,#4a1330,#2a0f20 420px,var(--bg))}}
+:root[data-theme=dark] main[data-p=dash]{background:linear-gradient(180deg,#4a1330,#2a0f20 420px,var(--bg))}
+main[data-p=dash] .stat:nth-child(1){background:linear-gradient(135deg,#ec4899,#be185d)}
+main[data-p=dash] .stat:nth-child(2){background:linear-gradient(135deg,#f472b6,#db2777)}
+main[data-p=dash] .stat:nth-child(3){background:linear-gradient(135deg,#fb7185,#e11d48)}
+main[data-p=dash] .stat:nth-child(4){background:linear-gradient(135deg,#f43f5e,#9d174d)}
+main[data-p=dash] .stat:nth-child(5){background:linear-gradient(135deg,#d946ef,#be185d)}
+main[data-p=dash] .stat:nth-child(6){background:linear-gradient(135deg,#f9a8d4,#ec4899)}
+main[data-p=dash] .card{border-left-color:#db2777;background:linear-gradient(180deg,#fdf2f8,var(--card) 70%)}
+main[data-p=dash] .card h3{color:#be185d}
+main[data-p=dash] .tag.wa,main[data-p=dash] .tag.ok,main[data-p=dash] .tag.no{background:#fce7f3}
+
+/* one colour per page */
+main[data-p=dash]{--ac:#db2777;--ac2:#be185d;--pg:#fbcfe8;--pgd:#4a1330}
+main[data-p=adm],main[data-p=students]{--ac:#c026d3;--ac2:#a21caf;--pg:#f5d0fe;--pgd:#3b0f45}
+main[data-p=fac]{--ac:#0891b2;--ac2:#0e7490;--pg:#a5f3fc;--pgd:#08343d}
+main[data-p=pay],main[data-p=pays]{--ac:#16a34a;--ac2:#15803d;--pg:#bbf7d0;--pgd:#0b3a1e}
+main[data-p=leave],main[data-p=leaves]{--ac:#ea580c;--ac2:#c2410c;--pg:#fed7aa;--pgd:#43200a}
+main[data-p=fb]{--ac:#ca8a04;--ac2:#a16207;--pg:#fef08a;--pgd:#3d3205}
+main[data-p]{background:var(--pg)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]) main[data-p]{background:var(--pgd)}}
+:root[data-theme=dark] main[data-p]{background:var(--pgd)}
+main[data-p] .stat:nth-child(n){background:linear-gradient(135deg,var(--ac),var(--ac2))}
+main[data-p] .card{background:var(--card);border-left-color:var(--ac)}
+main[data-p] .card h3{color:var(--ac)}
+main[data-p] .tag.ok{background:rgba(22,163,74,.15)}main[data-p] .tag.no{background:rgba(220,38,38,.15)}main[data-p] .tag.wa{background:rgba(217,119,6,.18)}
+
+/* background effects */
+main{position:relative;overflow:hidden;isolation:isolate}
+main>*{position:relative;z-index:1}
+main::before,main::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:0}
+main::before{background:
+ radial-gradient(circle at 20% 25%,rgba(255,255,255,.55) 0,transparent 28%),
+ radial-gradient(circle at 80% 15%,rgba(255,255,255,.4) 0,transparent 24%),
+ radial-gradient(circle at 70% 80%,rgba(255,255,255,.5) 0,transparent 30%),
+ radial-gradient(circle at 10% 85%,rgba(255,255,255,.35) 0,transparent 22%);
+ background-size:140% 140%;animation:drift 14s ease-in-out infinite alternate}
+main::after{background:
+ radial-gradient(circle,rgba(255,255,255,.7) 0 5px,transparent 6px) 0 0/90px 90px,
+ radial-gradient(circle,rgba(255,255,255,.5) 0 9px,transparent 10px) 40px 50px/130px 130px,
+ radial-gradient(circle,rgba(255,255,255,.55) 0 2px,transparent 3px) 0 0/28px 28px;
+ animation:rise 22s linear infinite}
+@keyframes drift{from{background-position:0 0}to{background-position:100% 100%}}
+@keyframes rise{from{background-position:0 0,40px 50px,0 0}to{background-position:0 -180px,40px -210px,0 -56px}}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]) main::before{opacity:.18}:root:not([data-theme=light]) main::after{opacity:.25}}
+:root[data-theme=dark] main::before{opacity:.18}:root[data-theme=dark] main::after{opacity:.25}
+@media(prefers-reduced-motion:reduce){main::before,main::after{animation:none}}
+.card,.stat{backdrop-filter:blur(2px)}
+
+/* bright emojis + floating emoji effects */
+.stat::after{opacity:1!important;font-size:40px;top:8px;right:12px;filter:saturate(1.6) brightness(1.15) drop-shadow(0 3px 6px rgba(0,0,0,.35))}
+.fac span,aside a,.box h1{filter:saturate(1.5) brightness(1.1)}
+.fx{pointer-events:none;overflow:hidden}
+main>.fx{position:absolute;inset:0;z-index:0}
+.fx span{position:absolute;bottom:-70px;line-height:1;filter:saturate(1.7) brightness(1.15) drop-shadow(0 3px 6px rgba(0,0,0,.3));animation:float linear infinite}
+@keyframes float{0%{transform:translateY(0) rotate(0);opacity:0}10%{opacity:1}90%{opacity:1}100%{transform:translateY(-120vh) rotate(360deg);opacity:0}}
+#auth{position:relative;overflow:hidden}#auth>.fx{position:absolute;inset:0}#auth .box{position:relative;z-index:1}
+@media(prefers-reduced-motion:reduce){.fx span{animation:none;bottom:auto;opacity:.8}}
+
+/* simple static background (no animation, no emoji) */
+.fx{display:none!important}
+main::before{animation:none;background-size:100% 100%}
+main::after{animation:none;background:radial-gradient(circle,rgba(255,255,255,.55) 1.5px,transparent 2px) 0 0/22px 22px}
+</style>
+</head>
+<body>
+
+<div id="auth">
+ <div class="box">
+  <h1>🏠 New hostel</h1><p class="s">Create your student account, then log in.</p>
+  <div class="tabs"><button id="tL" class="on" onclick="tab('L')">Login</button><button id="tR" onclick="tab('R')">Create ID</button><button id="tA" onclick="tab('A')">Admin</button></div>
+  <div id="fL"><label>Student ID</label><input id="lid" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"><label>Password</label><input id="lpw" type="password" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"><label style="display:flex;gap:6px;align-items:center;margin-top:8px"><input type="checkbox" style="width:auto" onchange="document.getElementById('lpw').type=this.checked?'text':'password'"> Show password</label><button class="btn" onclick="login(false)">Login</button></div>
+  <div id="fR" class="hide"><label>Full name</label><input id="rn"><label>Create Student ID</label><input id="rid" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"><label>Create Password (min 4)</label><input id="rpw" type="password" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"><label style="display:flex;gap:6px;align-items:center;margin-top:8px"><input type="checkbox" style="width:auto" onchange="document.getElementById('rpw').type=this.checked?'text':'password'"> Show password</label><button class="btn" onclick="reg()">Create account</button></div>
+  <div id="fA" class="hide"><label>Admin ID</label><input id="aid" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="Admin Student ID"><label>Password</label><input id="apw" type="password" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false"><label style="display:flex;gap:6px;align-items:center;margin-top:8px"><input type="checkbox" style="width:auto" onchange="document.getElementById('apw').type=this.checked?'text':'password'"> Show password</label><button class="btn" onclick="adminLogin()">Admin login</button></div>
+  <div id="am" class="msg"></div>
+ </div>
+</div>
+
+<div id="app" class="hide">
+ <aside id="side"><h2>🏠 New hostel</h2><div id="nav"></div><a onclick="logout()" style="color:var(--no)">🚪 Logout</a></aside>
+ <main><div class="top"><div style="display:flex;gap:10px;align-items:center"><button id="menu" onclick="side.classList.toggle('open')">☰</button><h1 id="ttl"></h1></div><span id="who" class="tag"></span></div><div id="view"></div></main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script>
+var SB=window.supabase.createClient('https://pysvjlixsphefvpfiavj.supabase.co','sb_publishable_zAcvjXF2N4MamAqf-9PFIw_Pyv0YU9o');
+var me=null,page='',uid=null;
+var db={students:{},leaves:[],feedback:[],pay:[],fees:{hostel:0,mess:0},total:0};
+function HF(){return db.fees.hostel}function MF(){return db.fees.mess}
+function $(i){return document.getElementById(i)}
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function say(t,ok){var m=$('am');m.className='msg '+(ok?'good':'err');m.textContent=t}
+function tab(t){['L','R','A'].forEach(function(x){$('f'+x).classList.toggle('hide',x!=t);$('t'+x).classList.toggle('on',x==t)});say('',1)}
+function mail(id){return id.toLowerCase()+'@newhostel.app'}
+function mapS(r){return{uid:r.user_id,id:r.student_id,name:r.name,adm:r.adm_status?{dept:r.adm_dept,year:r.adm_year,ph:r.adm_phone,g:r.adm_guardian,rt:r.adm_room_type,status:r.adm_status}:null,hostel:r.hostel_no=='0'?'':r.hostel_no,room:r.room_no=='0'?'':r.room_no,present:r.days_present,total:r.days_total,mess:r.mess_paid,hostelPaid:r.hostel_paid}}
+async function refresh(){
+ var q=await Promise.all([SB.from('students').select('*'),SB.from('fees').select('*').eq('id',1).single(),SB.from('payments').select('*').order('id'),SB.from('leaves').select('*').order('id'),SB.from('feedback').select('*').order('id'),SB.rpc('total_students')]);
+ q.forEach(function(r){if(r.error)throw r.error});
+ var by={};db.students={};(q[0].data||[]).forEach(function(r){var m=mapS(r),k=m.id.toLowerCase();db.students[k]=m;by[r.user_id]=k});
+ if(q[1].data)db.fees={hostel:q[1].data.hostel_fee,mess:q[1].data.mess_fee};
+ db.pay=(q[2].data||[]).map(function(p){return{id:by[p.user_id],t:p.fee_type=='hostel'?'Hostel fees':'Mess fees',a:p.amount,m:p.method,d:p.paid_on}});
+ db.leaves=(q[3].data||[]).map(function(l){return{lid:l.id,id:by[l.user_id],f:l.from_date,t:l.to_date,r:l.reason,s:l.status}});
+ db.feedback=(q[4].data||[]).map(function(f){return{id:by[f.user_id],r:f.rating,t:f.message}});
+ db.total=q[5].data||0;
+}
+async function reg(){
+ var n=$('rn').value.trim(),id=$('rid').value.trim(),pw=$('rpw').value;
+ if(!n||!id||pw.length<4)return say('Fill all fields; password needs 4+ characters.');
+ if(!/^[A-Za-z0-9._-]{3,30}$/.test(id))return say('Student ID: 3-30 letters, numbers, . _ - only.');
+ var r=await SB.auth.signUp({email:mail(id),password:pw,options:{data:{student_id:id,name:n}}});
+ if(r.error)return say(r.error.message);
+ await SB.auth.signOut();tab('L');$('lid').value=id;say('Account created! Now log in.',1);
+}
+async function login(admin){
+ var id=(admin?$('aid'):$('lid')).value.trim(),pw=(admin?$('apw'):$('lpw')).value;
+ if(!id||!pw)return say('Enter Student ID and password.');
+ var r=await SB.auth.signInWithPassword({email:mail(id),password:pw});
+ if(r.error)return say('Wrong Student ID or password. Login not allowed.');
+ uid=r.data.user.id;
+ try{await refresh()}catch(x){await SB.auth.signOut();uid=null;return say('Supabase setup or connection error: '+x.message)}
+ var m=null;for(var k in db.students)if(db.students[k].uid===uid)m=k;
+ if(!m){await SB.auth.signOut();return say('Account not found.')}
+ if(admin){var a=await SB.rpc('is_admin');if(a.error){await SB.auth.signOut();return say('Could not verify admin access: '+a.error.message)}if(!a.data){await SB.auth.signOut();return say('This account is not an admin.')}}
+ me=admin?'admin':m;start(!!admin);
+}
+function adminLogin(){return login(true)}
+async function logout(){await SB.auth.signOut();me=null;uid=null;$('app').classList.add('hide');$('auth').classList.remove('hide');['lpw','apw'].forEach(function(i){$(i).value=''});say('',1)}
+function start(adm){
+ $('auth').classList.add('hide');$('app').classList.remove('hide');
+ var items=adm?[['dash','📊 Admin Dashboard'],['students','🎓 Students & Admissions'],['pays','💳 Payments'],['leaves','📝 Leave Requests'],['fb','💬 Feedback']]
+  :[['dash','📊 Dashboard'],['adm','🎓 Hostel Admission'],['fac','🛏️ Room Facilities'],['pay','💳 Payment'],['leave','📝 Leave Form'],['fb','💬 Feedback']];
+ $('nav').innerHTML=items.map(function(i){return '<a data-p="'+i[0]+'" onclick="go(\''+i[0]+'\')">'+i[1]+'</a>'}).join('');
+ $('who').textContent=adm?'Admin':db.students[me].name+' ('+db.students[me].id+')';
+ go('dash');
+}
+
+var FX={dash:['💖','✨','🌸','💗','🎀'],adm:['🎓','📚','🏫','✏️','🌟'],fac:['🛏️','📶','🚿','💡','🧺'],pay:['💰','💳','🪙','💵','✅'],leave:['📝','🗓️','🚪','✈️','🎒'],fb:['⭐','💬','👍','😊','🌟']};
+var FXMAP={students:'adm',pays:'pay',leaves:'leave'};
+function fx(el,list,n){var o=el.querySelector(':scope>.fx');if(o)o.remove();var d=document.createElement('div');d.className='fx';
+ for(var i=0;i<n;i++){var e=document.createElement('span');e.textContent=list[i%list.length];
+  e.style.left=(Math.random()*95)+'%';e.style.fontSize=(22+Math.random()*26)+'px';
+  e.style.animationDuration=(11+Math.random()*12)+'s';e.style.animationDelay=(-Math.random()*22)+'s';d.appendChild(e)}
+ el.insertBefore(d,el.firstChild)}
+function go(p){
+ page=p;side.classList.remove('open');
+ var as=$('nav').children,t='';
+ for(var i=0;i<as.length;i++){var on=as[i].getAttribute('data-p')===p;as[i].classList.toggle('on',on);if(on)t=as[i].textContent}
+ $('ttl').textContent=t;document.querySelector('main').setAttribute('data-p',page);$('view').innerHTML=(me==='admin'?A:S)[p]();
+}
+function stat(l,v){return '<div class="stat"><small>'+l+'</small><b>'+v+'</b></div>'}
+function pct(s){return s.total?Math.round(s.present*100/s.total)+'%':'0%'}
+function tbl(h,rows){return '<div class="tw"><table><tr>'+h.map(function(x){return '<th>'+x+'</th>'}).join('')+'</tr>'+(rows.length?rows.join(''):'<tr><td colspan="'+h.length+'" style="color:var(--mu)">Nothing here yet.</td></tr>')+'</table></div>'}
+function st(s){return '<span class="tag '+(s=='Approved'||s=='Paid'?'ok':s=='Rejected'?'no':'wa')+'">'+esc(s)+'</span>'}
+var cnt=function(){return db.total};
+var all=function(){return Object.keys(db.students).map(function(k){return db.students[k]})};
+
+var S={
+ dash:function(){var s=db.students[me];var due=HF()+MF()-s.mess-s.hostelPaid;
+  return '<div class="grid">'+stat('Total Students',cnt())+stat('Fees Paid','₹'+(s.mess+s.hostelPaid))+stat('Fees Due','₹'+due)+stat('Attendance',pct(s))+stat('Hostel No',esc(s.hostel||'0'))+stat('Room No',esc(s.room||'0'))+'</div>'
+  +'<div class="card"><h3>Welcome, '+esc(s.name)+' 👋</h3><p style="color:var(--mu);margin:0">Admission: '+(s.adm?st(s.adm.status):'Not applied yet — use Hostel Admission in the sidebar.')+'</p></div>'},
+ adm:function(){var s=db.students[me];if(s.adm)return '<div class="card"><h3>Your application</h3><p>Status: '+st(s.adm.status)+'</p><p style="color:var(--mu)">'+esc(s.adm.dept)+' · Year '+esc(s.adm.year)+' · '+esc(s.adm.rt)+' room · Phone '+esc(s.adm.ph)+'</p></div>';
+  return '<div class="card"><h3>Apply for hostel admission</h3><div class="row"><div><label>Department</label><input id="d"></div><div><label>Year</label><select id="y"><option>1</option><option>2</option><option>3</option></select></div><div><label>Phone</label><input id="ph"></div><div><label>Guardian name</label><input id="g"></div><div><label>Room type</label><select id="rt"><option>2-sharing</option><option>3-sharing</option><option>4-sharing</option></select></div></div><button class="btn" style="max-width:220px" onclick="apply()">Submit application</button><div id="am2" class="msg err"></div></div>'},
+ fac:function(){return '<div class="card"><h3>Room facilities</h3><div class="fac"><div><span>🛏️</span>Cot, mattress &amp; study table</div><div><span>📶</span>24×7 Wi-Fi</div><div><span>🚿</span>Hot water bathrooms</div><div><span>🧺</span>Laundry area</div><div><span>🍽️</span>Mess with veg meals</div><div><span>💧</span>RO drinking water</div><div><span>🔌</span>Power backup</div><div><span>🛡️</span>CCTV &amp; warden</div></div></div>'},
+ pay:function(){var s=db.students[me];
+  return '<div class="grid">'+stat('Hostel Fee','₹'+s.hostelPaid+' / ₹'+HF())+stat('Mess Fee','₹'+s.mess+' / ₹'+MF())+'</div><div class="card"><h3>Make a payment</h3><div class="row"><div><label>Type</label><select id="pt"><option value="hostel">Hostel fees</option><option value="mess">Mess fees</option></select></div><div><label>Amount (₹)</label><input id="pa" type="number" min="1"></div><div><label>Method</label><select id="pm"><option>UPI</option><option>Card</option><option>Net banking</option></select></div></div><button class="btn" style="max-width:200px" onclick="pay()">Pay now</button><div id="am2" class="msg err"></div></div>'
+  +'<div class="card"><h3>History</h3>'+tbl(['Date','Type','Amount','Method'],db.pay.filter(function(p){return p.id===me}).map(function(p){return '<tr><td>'+p.d+'</td><td>'+p.t+'</td><td>₹'+p.a+'</td><td>'+esc(p.m)+'</td></tr>'}))+'</div>'},
+ leave:function(){return '<div class="card"><h3>Leave form</h3><div class="row"><div><label>From</label><input id="lf" type="date"></div><div><label>To</label><input id="lt" type="date"></div></div><label>Reason</label><textarea id="lr" rows="3"></textarea><button class="btn" style="max-width:200px" onclick="leave()">Submit</button><div id="am2" class="msg err"></div></div>'
+  +'<div class="card"><h3>My leaves</h3>'+tbl(['From','To','Reason','Status'],db.leaves.filter(function(l){return l.id===me}).map(function(l){return '<tr><td>'+l.f+'</td><td>'+l.t+'</td><td>'+esc(l.r)+'</td><td>'+st(l.s)+'</td></tr>'}))+'</div>'},
+ fb:function(){return '<div class="card"><h3>Feedback</h3><label>Rating</label><select id="fr"><option>5</option><option>4</option><option>3</option><option>2</option><option>1</option></select><label>Your feedback</label><textarea id="ft" rows="4"></textarea><button class="btn" style="max-width:200px" onclick="fb()">Send</button><div id="am2" class="msg err"></div></div>'}
+};
+var A={
+ dash:function(){var l=all(),f=0;l.forEach(function(s){f+=s.mess+s.hostelPaid});var p=0,t=0;l.forEach(function(s){p+=s.present;t+=s.total});
+  var pend=l.filter(function(s){return s.adm&&s.adm.status=='Pending'}).length;
+  return '<div class="grid">'+stat('Total Students',cnt())+stat('Fees Collected','₹'+f)+stat('Avg Attendance',t?Math.round(p*100/t)+'%':'0%')+stat('Pending Admissions',pend)+stat('Open Leaves',db.leaves.filter(function(x){return x.s=='Pending'}).length)+stat('Feedbacks',db.feedback.length)+'</div>'
+  +'<div class="card"><h3>💰 Set fees</h3><div class="row"><div><label>Hostel fee (₹)</label><input id="fh" type="number" min="0" value="'+HF()+'"></div><div><label>Mess fee (₹)</label><input id="fm" type="number" min="0" value="'+MF()+'"></div></div><button class="btn" style="max-width:200px" onclick="setFees()">Save fees</button><div id="am2" class="msg good"></div></div>'
+  +'<div class="card"><h3>Hostel overview</h3><p style="color:var(--mu);margin:0">Use Students &amp; Admissions to approve applications, allot hostel/room numbers and mark attendance.</p></div>'},
+ students:function(){return '<div class="card">'+tbl(['ID','Name','Admission','Hostel','Room','Attendance','Actions'],all().map(function(s){var k=s.id.toLowerCase();
+  return '<tr><td>'+esc(s.id)+'</td><td>'+esc(s.name)+'</td><td>'+(s.adm?st(s.adm.status):'—')+'</td><td>'+esc(s.hostel||'—')+'</td><td>'+esc(s.room||'—')+'</td><td>'+pct(s)+'</td><td>'+(s.adm&&s.adm.status=='Pending'?'<button class="btn sm grn" onclick="approve(\''+esc(k)+'\')">Approve</button> <button class="btn sm red" onclick="reject(\''+esc(k)+'\')">Reject</button> ':'')+'<button class="btn sm" onclick="mark(\''+esc(k)+'\',1)">Present</button> <button class="btn sm red" onclick="mark(\''+esc(k)+'\',0)">Absent</button></td></tr>'}))+'</div>'},
+ pays:function(){return '<div class="card">'+tbl(['Date','Student','Type','Amount','Method'],db.pay.map(function(p){return '<tr><td>'+p.d+'</td><td>'+esc(p.id)+'</td><td>'+p.t+'</td><td>₹'+p.a+'</td><td>'+esc(p.m)+'</td></tr>'}))+'</div>'},
+ leaves:function(){return '<div class="card">'+tbl(['Student','From','To','Reason','Status',''],db.leaves.map(function(l,i){return '<tr><td>'+esc(l.id)+'</td><td>'+l.f+'</td><td>'+l.t+'</td><td>'+esc(l.r)+'</td><td>'+st(l.s)+'</td><td>'+(l.s=='Pending'?'<button class="btn sm grn" onclick="lv('+i+',\'Approved\')">Approve</button> <button class="btn sm red" onclick="lv('+i+',\'Rejected\')">Reject</button>':'')+'</td></tr>'}))+'</div>'},
+ fb:function(){return '<div class="card">'+tbl(['Student','Rating','Feedback'],db.feedback.map(function(f){return '<tr><td>'+esc(f.id)+'</td><td>'+'★'.repeat(f.r)+'</td><td style="white-space:normal">'+esc(f.t)+'</td></tr>'}))+'</div>'}
+};
+function err(t){var m=$('am2');if(m)m.textContent=t}
+function fail(x){if(x.error){err(x.error.message);return true}return false}
+async function done(p){try{await refresh();go(p)}catch(x){err('Supabase setup or connection error: '+x.message)}}
+async function apply(){var d=$('d').value.trim(),ph=$('ph').value.trim(),g=$('g').value.trim();if(!d||!ph||!g)return err('Please fill all fields.');
+ if(fail(await SB.rpc('apply_admission',{p_dept:d,p_year:parseInt($('y').value,10),p_phone:ph,p_guardian:g,p_room_type:$('rt').value})))return;await done('adm')}
+async function pay(){var a=parseInt($('pa').value,10);if(!a||a<1)return err('Enter a valid amount.');
+ if(fail(await SB.rpc('make_payment',{p_type:$('pt').value,p_amount:a,p_method:$('pm').value})))return;await done('pay')}
+async function leave(){var f=$('lf').value,t=$('lt').value,r=$('lr').value.trim();if(!f||!t||!r)return err('Fill all fields.');if(t<f)return err('"To" date is before "From" date.');
+ if(fail(await SB.from('leaves').insert({user_id:uid,from_date:f,to_date:t,reason:r})))return;await done('leave')}
+async function fb(){var t=$('ft').value.trim();if(!t)return err('Please write your feedback.');
+ if(fail(await SB.from('feedback').insert({user_id:uid,rating:parseInt($('fr').value,10),message:t})))return;await done('fb');$('view').insertAdjacentHTML('afterbegin','<div class="card good">Thank you for your feedback!</div>')}
+async function approve(k){var h=prompt('Hostel no?','1'),r=h&&prompt('Room no?','101');if(!h||!r)return;if(fail(await SB.rpc('admin_review_admission',{p_user:db.students[k].uid,p_status:'Approved',p_hostel:h,p_room:r})))return;await done('students')}
+async function reject(k){if(fail(await SB.rpc('admin_review_admission',{p_user:db.students[k].uid,p_status:'Rejected'})))return;await done('students')}
+async function mark(k,p){if(fail(await SB.rpc('admin_mark_attendance',{p_user:db.students[k].uid,p_present:!!p})))return;await done('students')}
+async function setFees(){var r=await SB.rpc('admin_set_fees',{p_hostel:parseInt($('fh').value,10)||0,p_mess:parseInt($('fm').value,10)||0});if(r.error)return err(r.error.message);try{await refresh();$('am2').textContent='Fees saved.'}catch(x){err('Supabase setup or connection error: '+x.message)}}
+async function lv(i,st){if(fail(await SB.rpc('admin_review_leave',{p_id:db.leaves[i].lid,p_status:st})))return;await done('leaves')}
+</script>
+</body>
+</html>
